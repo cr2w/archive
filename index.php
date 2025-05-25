@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="apple-touch-icon" href="icon.png">
-    
+
     <style>
         body {
             font-family: "Helvetica", sans-serif;
@@ -48,10 +48,21 @@
 </head>
 <body>
     <h1>Download Files</h1>
-    <a class="file-button" href="iTgLegacy-1.10.ipa" download>iTgLegacy 1.10</a>
-    <a class="file-button" href="iTgLegacy1.11.ipa" download>iTgLegacy 1.11</a>
-    <a class="file-button" href="iProRecorder__Premier_Voice___Music_Recorder_4.0.5_ios_3.1.3.ipa" download>iProRecorder 4.0.5</a>
-    <a class="file-button" href="FoxMusic.ipa" download>FoxMusic</a>
-    <a class="file-button" href="Spotify_0.7.2_ios_5.0.ipa" download>Spotify_0.7.2_ios_5.0.ipa</a>
+
+    <?php
+    $directory = ".";
+    $files = scandir($directory);
+    $allowed_extensions = ['ipa'];
+
+    foreach ($files as $file) {
+        $file_info = pathinfo($file);
+        if (
+            isset($file_info['extension']) &&
+            in_array(strtolower($file_info['extension']), $allowed_extensions)
+        ) {
+            echo '<a class="file-button" href="' . htmlspecialchars($file) . '" download>' . htmlspecialchars($file) . '</a>';
+        }
+    }
+    ?>
 </body>
 </html>
